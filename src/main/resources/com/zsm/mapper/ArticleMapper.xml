@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--指定命名空间，一般和mapper接口的全限定名称一样-->
+<mapper namespace="com.zsm.mapper.ArticleMapper">
+    <select id="getById" resultType="Article">
+        select * from articles where id = #{id} and deleteFlag = 0
+    </select>
+    <select id="getAll" resultType="Article" >
+        select * from articles where type = #{type} and deleteFlag = 0 order by createTime desc
+    </select>
+    <update id="delete">
+        update articles set deleteFlag = 1 where id = #{id} and deleteFlag = 0
+    </update>
+    <insert id="add">
+        insert into articles values(#{id}, #{title}, #{desc}, #{photoPath}, #{type}, #{content}, #{createTime}, #{updateTime}, 0)
+    </insert>
+    <update id="edit">
+        update articles set
+        title = #{title},
+        `desc` = #{desc},
+        photoPath = #{photoPath},
+        updateTime = #{updateTime},
+        type = #{type},
+        content = #{content}
+        where id = #{id} and deleteFlag = 0
+    </update>
+</mapper>

@@ -1,0 +1,15 @@
+.title {
+    font-weight: 700;
+    font-size: 30px;
+    border-bottom: 2px solid lightgrey;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.desc {
+    font-size: 15px;
+    font-weight: 200;
+    color: grey;
+    width: 100%;
+    padding: 20px;
+}
+

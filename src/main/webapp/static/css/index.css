@@ -1,0 +1,26 @@
+.card-img-top {
+    height: 180px;
+}
+
+.title {
+    text-align: center;
+    color: red;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.desc {
+    color: grey;
+}
+
+.card:hover {
+    box-shadow: 0 1px 50px grey;
+    cursor: pointer;
+}
+
+.grid-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 20px;
+}

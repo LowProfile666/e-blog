@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/static/css/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/footer.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/list.css}"/>
+    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+    <link rel="icon" th:href="@{/static/jcuticon.ico}"/>
+</head>
+<body>
+<div th:insert="components/navbar::navbar"></div>
+
+<div class="container content" style="display: flex">
+    <div class="user-photo" style="width: 15%; text-align: center">
+        <img th:src="@{/static/images/avatar6.jpg}" alt="用户头像" style="border-radius: 50%">
+        <a class="btn btn-outline-success" type="button" th:href="@{/logout}" style="margin-top: 20px">退出登录</a>
+    </div>
+    <div class="card" style="width: 75%;margin: 0 auto;text-align: center;">
+        <div class="card-body" style="display: block; height: auto;">
+            <form action="/editUser" method="post">
+                <div class="">
+                    用户ID：<span th:text="${user.id}"></span>
+                </div>
+                <div class="">
+                    用户名：<span th:text="${user.account}"></span>
+                </div>
+                <div class="">
+                    密码：<span th:text="${user.password}"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:insert="components/footer::footer"></div>
+</body>
+</html>

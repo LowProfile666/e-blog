@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑页面</title>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/static/css/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/footer.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/editor/css/editormd.min.css}"/>
+    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+    <script th:src="@{/static/editor/editormd.min.js}"></script>
+    <link rel="icon" th:href="@{/static/jcuticon.ico}" />
+
+</head>
+<body>
+<div th:insert="components/navbar::navbar"></div>
+<div class="container content">
+    <form>
+        <input type="hidden" th:value="${data.id}" id="id">
+        <div class="title">
+            <h2>标题：</h2>
+            <input type="text" class="form-control" id="title" th:value="${data.title}">
+        </div>
+        <div class="photo">
+            <h2>封面：</h2>
+            <input type="file" class="form-control" id="photo" onchange="previewImage(event)">
+            <img th:if="${data != null}" th:src="${data.photoPath}" width="10%" id="photoPreview">
+
+        </div>
+        <div class="desc">
+            <h2>摘要：</h2>
+            <textarea class="form-control" placeholder="该文章的大概介绍" id="desc" th:text="${data.desc}"></textarea>
+        </div>
+        <div class="desc">
+            <h2>分类：</h2>
+            <select id="type" class="form-select" aria-label="Default select example">
+                <option th:value="note" th:selected="${data.type} == 'note'">笔记</option>
+                <option th:value="project" th:selected="${data.type} == 'project'">项目</option>
+            </select>
+        </div>
+
+        <div class="editor">
+            <h2>正文：</h2>
+            <div id="my-editormd">
+                <textarea id="content" style="display:none;" th:text="${data.content}"></textarea>
+                <!-- 注意：name属性的值-->
+                <textarea id="my-editormd-html-code" style="display:none;"></textarea>
+            </div>
+        </div>
+        <div class="submit">
+            <button type="button" class="btn btn-success" onclick="add(event)">提交</button>
+        </div>
+    </form>
+</div>
+<div th:insert="components/footer::footer"></div>
+</body>
+</html>
+
+<script th:inline="javascript">
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('photoPreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function check() {
+        if ($("#title").val() === "") alert("标题不能为空！");
+        else if ($("#desc").val() === "") alert("摘要不能为空！");
+        else if ($("#content").val() === "") alert("正文内容不能为空！");
+        else if ($("#type").val() === "") alert("文章类型不能为空！");
+        else return true;
+        return false;
+    }
+
+    function add(e) {
+        e.preventDefault();
+
+        if (!check()) return;
+
+        // 创建一个FormData对象
+        let formData = new FormData();
+        formData.append("title", $("#title").val());
+        formData.append("photo", $("#photo")[0].files[0]);
+        formData.append("desc", $("#desc").val());
+        formData.append("content", $("#content").val());
+        formData.append("date", "" + new Date().toLocaleString());
+        formData.append("type", $("#type").val());
+        formData.append("id", $("#id").val());
+        formData.append("photoPath", $("#photoPreview").attr("src"));
+
+        $.ajax({
+            url: "/add",
+            type: "post",
+            data: formData,
+            processData: false, // 必须关闭
+            contentType: false, // 必须关闭
+            success: function (resp) {
+                location.href = "/management";
+            },
+            error: function (err) {
+                alert("失败" + err);
+            }
+        });
+    }
+
+
+    $(function () {
+        editormd("my-editormd", {//注意1：这里的就是上面的DIV的id属性值
+            width: "100%",
+            height: 640,
+            syncScrolling: "single",
+            path: "/static/editor/lib/",//注意2：你的路径
+            saveHTMLToTextarea: true,  //注意3：这个配置，方便post提交表单,
+            onfullscreen: function () {
+                // 设置编辑器为最高层级，确保不被遮挡
+                this.editor.css("z-index", 9999);
+                this.editor.css("position", "fixed");
+                this.editor.css("top", 0);
+                this.editor.css("left", 0);
+                this.editor.css("width", "100%");
+                this.editor.css("height", "100%");
+            },
+            onfullscreenExit: function () {
+                // 恢复原来的样式
+                this.editor.css("z-index", "");
+                this.editor.css("position", "");
+                this.editor.css("top", "");
+                this.editor.css("left", "");
+                this.editor.css("width", "100%");
+                this.editor.css("height", "640px");
+            }
+        });
+    });
+</script>

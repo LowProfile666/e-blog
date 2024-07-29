@@ -1,0 +1,72 @@
+.menu {
+    width: 15%;
+}
+.menu-list-group {
+    position: sticky;
+    top: 100px;
+}
+.list {
+    width: 80%;
+    display: block;
+    margin-left: 30px;
+}
+.card {
+    padding: 0px;
+    margin-bottom: 5px;
+}
+.card:hover {
+    box-shadow: 0 1px 5px grey;
+    /*cursor: pointer;*/
+}
+.card-body {
+    display: flex;
+    height: 150px;
+}
+.photo {
+    height: 118px;
+    width: 200px;
+}
+.text {
+    height: 150px;
+    width: 90%;
+    margin-left: 20px;
+}
+.title {
+    font-weight: 800;
+    font-size: 25px;
+    height: 33%;
+}
+.desc {
+    font-size: 16px;
+    color: grey;
+    font-weight: 400;
+    height: 33%;
+    white-space: wrap;
+    max-height: 2em; /* 设置最大高度 */
+    line-height: 1; /* 设置行高 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.time {
+    font-size: 14px;
+    color: lightgray;
+    display: flex;
+    align-items: flex-end;
+}
+.operations {
+    text-align: right;
+}
+a {
+    text-decoration: none;
+}
+
+.foot {
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}

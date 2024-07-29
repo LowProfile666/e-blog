@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/static/css/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/footer.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+    <link rel="icon" th:href="@{/static/jcuticon.ico}" />
+</head>
+<body>
+<div th:insert="components/navbar::navbar"></div>
+<div class="container content">
+    <div class="grid-list">
+        <div class="card" th:each="data : ${datas}">
+            <a th:href="@{/detail/{id}(id=${data.id})}" target="_blank">
+                <img th:src="@{${data.photoPath}}" class="card-img-top">
+                <div class="card-body">
+                    <div class="title" th:text="${data.title}"></div>
+                    <div class="desc" th:text="${data.desc}"></div>
+                </div>
+            </a>
+        </div>
+        <div class="card">
+            <a th:href="@{/add}" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="successColor" class="bi bi-plus card-img-top"
+                     viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                <div class="card-body">
+                    <div class="title" th:text="添加新笔记"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div th:insert="components/footer::footer"></div>
+</html>

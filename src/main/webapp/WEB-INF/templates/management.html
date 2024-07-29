@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/static/css/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/footer.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/list.css}"/>
+    <script th:src="@{/static/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+    <link rel="icon" th:href="@{/static/jcuticon.ico}" />
+
+</head>
+<body>
+<div th:insert="components/navbar::navbar"></div>
+
+<div class="container content" style="display: flex">
+    <div class="menu">
+        <div class="list-group menu-list-group">
+            <a th:href="@{/management/note}" th:classappend="${currentLink == 'note' ? 'active' : ''}"
+               class="list-group-item list-group-item-action menu-link" aria-current="true">
+                笔记管理
+            </a>
+            <a th:href="@{/management/project}" th:classappend="${currentLink == 'project' ? 'active' : ''}"
+               class="list-group-item list-group-item-action menu-link">项目管理</a>
+            <a th:href="@{/add}" class="list-group-item list-group-item-action menu-link">添加文章</a>
+        </div>
+    </div>
+    <div class="list">
+        <div class="list-group">
+            <div class="card list-group-item list-group-item-action" th:each="data : ${datas}">
+                <div class="card-body">
+                    <div class="photo">
+                        <img th:src="@{${data.photoPath}}" alt="封面图片">
+                    </div>
+                    <div class="text">
+                        <div class="title" th:text="${data.title}"></div>
+                        <div class="desc" th:text="${data.desc}"></div>
+                        <div class="foot">
+                            <div class="time">
+                                创建时间：<span th:text="${data.createTime}"></span>
+                            </div>
+                            <div class="time" th:if="${data.updateTime != null}">
+                                最近更新：<span th:text="${data.updateTime}"></span>
+                            </div>
+                            <div class="operations">
+                                <a type="button" class="btn btn-info btn-small" th:href="@{/edit/{id}(id=${data.id})}"
+                                   style="color: white">编辑</a>
+                                <a type="button" class="btn btn-info btn-small" th:href="@{/detail/{id}(id=${data.id})}"
+                                   style="color: white">查看</a>
+                                <a type="button" id="del_link" class="btn btn-info btn-small" style="color: white;"
+                                   onclick="saveCurUrl(event)" th:data-id="${data.id}">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/add" th:if="${#lists.isEmpty(datas)}">添加新文章</a>
+        </div>
+
+    </div>
+</div>
+
+<div th:insert="components/footer::footer"></div>
+</body>
+</html>
+<script>
+    function saveCurUrl(e) {
+        let id = $("#del_link").attr("data-id");
+        console.log(id);
+        e.preventDefault();
+        sessionStorage.setItem("curUrl", location.href);
+        $.ajax({
+            url: "/delete/" + id,
+            type: "get",
+            success(resp) {
+                location.href = sessionStorage.getItem("curUrl");
+            }
+        })
+    }
+</script>

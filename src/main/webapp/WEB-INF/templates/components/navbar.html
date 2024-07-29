@@ -1,0 +1,25 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-lg bg-body-tertiary my-navbar" >
+    <div class="container container-fluid">
+        <a th:href="@{/}" class="navbar-brand">
+            <img th:src="@{/static/images/avatar6.jpg}" alt="" width="30">
+            LowProfile
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" th:href="@{/note}" id="link-article">我的笔记</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/project}" id="link-project">我的项目</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/management}" th:if="${session.user != null}" >管理</a>
+                </li>
+            </ul>
+            <div class="d-flex" role="search" style="">
+                <a class="btn btn-outline-success" type="button" th:href="@{/management}" th:if="${session.user == null}">后台</a>
+                <a class="btn btn-outline-success" type="button" th:href="@{/user}" th:if="${session.user != null}">个人中心</a>
+            </div>
+        </div>
+    </div>
+</nav>
