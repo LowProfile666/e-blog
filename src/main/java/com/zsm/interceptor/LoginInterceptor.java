@@ -21,7 +21,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String originalUrl = uri + (queryString == null ? "" : "?" + queryString);
         session.setAttribute("originalUrl", originalUrl);
         if (user == null) {
-            response.sendRedirect("/login");
+            response.sendRedirect("login");
             return false;
         }
         return true;
