@@ -16,7 +16,7 @@
 <body>
 <div th:insert="components/navbar::navbar"></div>
 
-<div class="container content" style="display: flex">
+<div class="container content" style="display: flex; min-height: 100vh;">
     <div class="user-photo" style="width: 15%; text-align: center">
         <img th:src="@{/static/images/avatar6.jpg}" alt="用户头像" style="border-radius: 50%">
         <a class="btn btn-outline-success" type="button" th:href="@{/logout}" style="margin-top: 20px">退出登录</a>

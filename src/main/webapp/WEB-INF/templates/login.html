@@ -16,7 +16,7 @@
 <body>
 <div th:insert="components/navbar::navbar"></div>
 
-<div class="container content">
+<div class="container content" style="min-height: 100vh;">
     <div class="card" style="width: 30%;margin: 0 auto;text-align: center;">
         <div class="card-body">
             <form th:action="@{/login}" method="post">

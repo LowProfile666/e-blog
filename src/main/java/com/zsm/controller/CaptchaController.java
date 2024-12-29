@@ -22,7 +22,7 @@ public class CaptchaController {
         CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(200, 100, 3, 20);
         // 获取到生成的验证码
         String code = circleCaptcha.getCode();
-        System.out.println("验证码：" + code);
+
         // 要将验证码存入到session中，这样前端输入的验证码可以和session中的验证码进行比较
         request.getSession().setAttribute("CAPTCHA_CODE", code);
         response.setContentType("image/jpeg");

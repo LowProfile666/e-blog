@@ -15,7 +15,7 @@
 </head>
 <body>
 <div th:insert="components/navbar::navbar"></div>
-<div class="container content">
+<div class="container content" style="min-height: 100vh">
     <div class="grid-list">
         <div class="card" th:each="data : ${datas}">
             <a th:href="@{/detail/{id}(id=${data.id})}" target="_blank">

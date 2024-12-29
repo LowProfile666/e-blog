@@ -17,7 +17,7 @@
 <body>
 <div th:insert="components/navbar::navbar"></div>
 
-<div class="container content" style="display: flex">
+<div class="container content" style="display: flex; min-height: 100vh;">
     <div class="menu">
         <div class="list-group menu-list-group">
             <a th:href="@{/management/note}" th:classappend="${currentLink == 'note' ? 'active' : ''}"
@@ -70,7 +70,6 @@
 <script>
     function saveCurUrl(e) {
         let id = $("#del_link").attr("data-id");
-        console.log(id);
         e.preventDefault();
         sessionStorage.setItem("curUrl", location.href);
         $.ajax({
